@@ -42,3 +42,4 @@ jobs:
              personal_token: ${{ secrets.GH_PAT }}
              publish_dir: ./output
              publish_branch: gh-pages
+             commit_message: "Auto update site [skip ci]"
