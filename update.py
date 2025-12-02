@@ -12,11 +12,11 @@ def fetch_items():
     params = {
         "api_id": API_ID,
         "affiliate_id": AFF_ID,
-        "site": "DMM.com",
-        "service": SERVICE,
-        "floor": FLOOR,
-        "hits": HITS,
-        "sort": SORT
+        "site": "FANZA",
+        "service": "digital",
+        "floor": "videoa",
+        "hits": "100",
+        "sort": "rank"
     }
     response = requests.get(API_URL, params=params)
     data = response.json()
@@ -57,3 +57,4 @@ if __name__ == "__main__":
     generate_html()
 
     print("サイト更新完了！")
+
