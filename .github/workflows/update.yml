@@ -25,8 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests jinja2
-
-      - name: Run update.py
-        run: |
+          - name: Run update.py
+          run: |
+          cd dmm-ranking-site　# update.py のあるディレクトリ
           python update.py
-  working-directory: ./  # update.py のあるディレクトリ
