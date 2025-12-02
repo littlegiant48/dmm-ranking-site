@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:                     # ← ここで Secrets を環境変数として渡す
+    env:                     # Secrets を環境変数として渡す
       DMM_API_ID: ${{ secrets.DMM_API_ID }}
       DMM_AFF_ID: ${{ secrets.DMM_AFF_ID }}
 
@@ -25,7 +25,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests jinja2
-          - name: Run update.py
-          run: |
-          cd dmm-ranking-site　# update.py のあるディレクトリ
-          python update.py
+
+      - name: Run update.py
+        run: |
+          # update.py のあるディレクトリに移動
+          cd dmm-ranking-site  # ここを実際のパスに合わせて変更
+          python3 update.py
