@@ -4,6 +4,8 @@ import os
 from jinja2 import Environment, FileSystemLoader
 from config import API_ID, AFF_ID, SERVICE, FLOOR, HITS, SORT
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 # APIエンドポイント
 API_URL = "https://api.dmm.com/affiliate/v3/ItemList"
 
@@ -30,6 +32,9 @@ def load_template(template_name):
     env = Environment(loader=FileSystemLoader("templates"))
     return env.get_template(template_name)
 
+os.makedirs("output/items", exist_ok=True)
+print("output/items フォルダ作成済み")
+
 # HTML生成
 def generate_html():
     items = fetch_items()  # APIから取得
@@ -43,7 +48,15 @@ def generate_html():
 
     # index.html生成
     with open("output/index.html", "w", encoding="utf-8") as f:
-        f.write(index_template.render(items=items))
+    f.write(index_template.render(items=items))
+    print("index.html 生成完了")
+
+for item in items:
+    content_id = item.get("content_id", "unknown")
+    file_path = f"output/items/{content_id}.html"
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(item_template.render(item=item))
+    print(f"{file_path} 生成完了")
 
     # 個別ページ生成
     for item in items:
@@ -57,4 +70,5 @@ if __name__ == "__main__":
     generate_html()
 
     print("サイト更新完了！")
+
 
