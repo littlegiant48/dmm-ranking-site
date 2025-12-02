@@ -2,36 +2,30 @@ name: Auto Update DMM Site
 
 on:
   schedule:
-    - cron: "0 18 * * *"  # 毎日3時(JST)に更新（UTC+9で18時）
+    - cron: "0 18 * * *"  # 毎日日本時間3時に実行（UTC+9なので18時）
   workflow_dispatch:      # 手動実行も可能
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:                     # ← ここで Secrets を環境変数として渡す
+      DMM_API_ID: ${{ secrets.DMM_API_ID }}
+      DMM_AFF_ID: ${{ secrets.DMM_AFF_ID }}
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        pip install requests jinja2
+      - name: Install dependencies
+        run: |
+          pip install requests jinja2
 
-    - name: Run update.py
-      run: |
-        python update.py
-
-    - name: Commit & push changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add output
-        git commit -m "Auto update" || echo "No changes"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run update.py
+        run: |
+          python update.py
