@@ -10,16 +10,19 @@ API_URL = "https://api.dmm.com/affiliate/v3/ItemList"
 # DMM APIから商品データを取得
 def fetch_items():
     params = {
-        "api_id": API_ID,           # あなたのAPI ID
-        "affiliate_id": AFF_ID,     # あなたのアフィリエイトID
-        "site": "DMM.com",          # 固定
-        "service": SERVICE,         # config.pyで指定
-        "floor": FLOOR,             # config.pyで指定
-        "hits": HITS,               # 取得件数
-        "sort": SORT                # 並び順（rank, date, etc）
+        "api_id": API_ID,
+        "affiliate_id": AFF_ID,
+        "site": "DMM.com",
+        "service": SERVICE,
+        "floor": FLOOR,
+        "hits": HITS,
+        "sort": SORT
     }
     response = requests.get(API_URL, params=params)
     data = response.json()
+    print("API レスポンス:", data)  # ここでレスポンス確認
+    if "result" not in data or "items" not in data["result"]:
+        return []
     return data["result"]["items"]
 
 # Jinja2テンプレートの読み込み
@@ -52,4 +55,5 @@ def generate_html():
 # メイン実行
 if __name__ == "__main__":
     generate_html()
+
     print("サイト更新完了！")
