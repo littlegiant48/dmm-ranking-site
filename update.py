@@ -48,7 +48,7 @@ def generate_html():
 
     # index.html生成
     with open("output/index.html", "w", encoding="utf-8") as f:
-    　f.write(index_template.render(items=items))
+        f.write(index_template.render(items=items))
     print("index.html 生成完了")
 
 for item in items:
@@ -70,6 +70,7 @@ if __name__ == "__main__":
     generate_html()
 
     print("サイト更新完了！")
+
 
 
 
