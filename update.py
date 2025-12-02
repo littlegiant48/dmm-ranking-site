@@ -58,18 +58,13 @@ for item in items:
         f.write(item_template.render(item=item))
     print(f"{file_path} 生成完了")
 
-    # 個別ページ生成
-    for item in items:
-        content_id = item.get("content_id", "unknown")
-        file_path = f"output/items/{content_id}.html"
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(item_template.render(item=item))
 
 # メイン実行
 if __name__ == "__main__":
     generate_html()
 
     print("サイト更新完了！")
+
 
 
 
