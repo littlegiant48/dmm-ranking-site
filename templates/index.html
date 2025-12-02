@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DMMランキング</title>
+</head>
+<body>
+<h1>最新ランキング</h1>
+<ul>
+{% for item in items %}
+  <li>
+    <a href="items/{{ item.content_id }}.html">
+      <img src="{{ item.imageURL.large }}" width="120">
+      {{ item.title }}
+    </a>
+  </li>
+{% endfor %}
+</ul>
+</body>
+</html>
