@@ -17,7 +17,7 @@ def fetch_items():
         "site": "FANZA",
         "service": "digital",
         "floor": "videoa",
-        "hits": "100",
+        "hits": "1",
         "sort": "rank"
     }
     response = requests.get(API_URL, params=params)
@@ -64,6 +64,7 @@ def generate_html():
 if __name__ == "__main__":
     generate_html()  # ← 必ず関数を呼ぶ
     print("サイト更新完了！")
+
 
 
 
