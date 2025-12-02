@@ -29,3 +29,4 @@ jobs:
       - name: Run update.py
         run: |
           python update.py
+  working-directory: ./  # update.py のあるディレクトリ
