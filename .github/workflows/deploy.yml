@@ -1,9 +1,13 @@
 name: Build and Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'  # 毎日 12:00 UTC → 21:00 JST
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
