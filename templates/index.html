@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DMMランキング + 動画</title>
+  <title>DMMランキング</title>
   <style>
     body {
       margin: 0;
@@ -17,13 +17,29 @@
       margin: 0 auto;
       padding: 20px;
     }
-    .layout {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+
+    /* 動画部分 */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;  /* 16:9 の比率を維持 */
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: #000;
+      margin-bottom: 20px;
     }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* カード一覧部分 */
     .cards {
-      flex: 1 1 600px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.5rem;
@@ -55,64 +71,33 @@
       transform: translateY(-5px);
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
-
-    /* --- 動画コンテナ：16:9 を維持 --- */
-    .video-wrapper {
-      flex: 0 1 400px;
-      position: relative;
-      /* 横幅に応じて調整され、縦横比 16:9 を保つ */
-      width: 100%;
-      padding-bottom: 56.25%; /* 9 ÷ 16 = 0.5625 → 16:9 */
-      height: 0;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      background-color: #000;
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    @media (max-width: 900px) {
-      .layout {
-        flex-direction: column;
-      }
-      .video-wrapper {
-        margin-top: 20px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="wrapper">
     <h1>最新ランキング</h1>
-    <div class="layout">
-      <!-- 左側：カードリスト -->
-      <ul class="cards">
-        {% for item in items %}
-        <li>
-          <a class="card" href="items/{{ item.content_id }}.html">
-            <img src="{{ item.imageURL.large }}" alt="{{ item.title }}">
-            <div class="card-title">{{ item.title }}</div>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
 
-      <!-- 右側：YouTube動画埋め込み（16:9 + 無音自動再生） -->
-      <div class="video-wrapper">
-        <iframe 
-          src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1" 
-          title="YouTube video player" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
+    <!-- 動画を先頭に表示 -->
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
+
+    <!-- その下にカードリスト -->
+    <ul class="cards">
+      {% for item in items %}
+      <li>
+        <a class="card" href="items/{{ item.content_id }}.html">
+          <img src="{{ item.imageURL.large }}" alt="{{ item.title }}">
+          <div class="card-title">{{ item.title }}</div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </body>
 </html>
