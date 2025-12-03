@@ -30,3 +30,8 @@ jobs:
       
       - name: Check output folder
         run: ls -R output
+      
+      - name: Debug path
+        run: |
+          pwd
+          ls -R
