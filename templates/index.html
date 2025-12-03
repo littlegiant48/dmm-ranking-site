@@ -79,14 +79,15 @@
     <h1>最新ランキング</h1>
 
     <!-- 動画をカードリストの上に表示 -->
-    <div class="video-wrapper">
-      <iframe 
-        src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
+<div class="video-wrapper" style="height:100px; width:100%; overflow:hidden; position:relative; border-radius:12px; background:#000; margin-bottom:20px;">
+  <iframe
+    src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1"
+    style="position:absolute; top:50%; left:50%; width:640px; height:360px; transform:translate(-50%, -50%) scale(0.2777); transform-origin:top left; border:none;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
 
     <!-- カードリスト -->
     <ul class="cards">
@@ -102,3 +103,4 @@
   </div>
 </body>
 </html>
+
