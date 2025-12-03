@@ -1,21 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>DMMランキング</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DMMランキング</title>
+  <style>
+    body {
+      background-color: #f4f4f8;
+      color: #333;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .card-title {
+      padding: 0.5rem 1rem 1rem;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+  </style>
 </head>
 <body>
-<h1>最新ランキング</h1>
-<ul>
-{% for item in items %}
-  <li>
-    <a href="items/{{ item.content_id }}.html">
-      <img src="{{ item.imageURL.large }}" width="120"><br>
-      {{ item.title }}
-    </a>
-  </li>
-{% endfor %}
-</ul>
+  <div class="wrapper">
+    <h1>FANZA最新ランキング</h1>
+    <ul class="cards">
+      {% for item in items %}
+      <li>
+        <a class="card" href="items/{{ item.content_id }}.html">
+          <img src="{{ item.imageURL.large }}" alt="{{ item.title }}">
+          <div class="card-title">{{ item.title }}</div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </body>
-
 </html>
