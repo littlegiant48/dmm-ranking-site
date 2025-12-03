@@ -10,11 +10,12 @@
 {% for item in items %}
   <li>
     <a href="items/{{ item.content_id }}.html">
-      <img src="{{ item.imageURL.large }}" width="120">
+      <img src="{{ item.imageURL.large }}" width="120"><br>
       {{ item.title }}
     </a>
   </li>
 {% endfor %}
 </ul>
 </body>
+
 </html>
