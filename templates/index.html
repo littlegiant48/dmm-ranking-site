@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DMMランキング</title>
+  <meta name="viewport" content="width=device-width, initial‑scale=1">
+  <title>DMMランキング + 動画</title>
   <style>
     body {
       margin: 0;
@@ -23,7 +23,7 @@
       gap: 20px;
     }
     .cards {
-      flex: 1 1 600px; /* 左側：カードエリア */
+      flex: 1 1 600px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.5rem;
@@ -56,19 +56,19 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
 
-    /* --- 動画用エリア（小さめ） --- */
-    .video-small {
-      flex: 0 1 auto;
-      width: 200px;             /* 幅 200px */
+    /* --- 動画コンテナ：16:9 を維持 --- */
+    .video-wrapper {
+      flex: 0 1 400px; /* 必要に応じて幅を調整 */
       position: relative;
-      padding-bottom: 100%;      /* 高さ = 幅 → ほぼ正方形 */
+      width: 100%;     /* または 400px など固定幅 */
+      padding-bottom: 56.25%; /* 9 ÷ 16 × 100 = 56.25% → 16:9 */
       height: 0;
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       background-color: #000;
     }
-    .video-small iframe {
+    .video-wrapper iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
@@ -80,7 +80,7 @@
       .layout {
         flex-direction: column;
       }
-      .video-small {
+      .video-wrapper {
         margin-top: 20px;
       }
     }
@@ -102,12 +102,13 @@
         {% endfor %}
       </ul>
 
-      <!-- 右側：YouTube動画埋め込み（小さめ） -->
-      <div class="video-small">
-        <iframe src="https://www.youtube.com/embed/xVNHG0ThbEw"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
+      <!-- 右側：YouTube動画埋め込み（16:9＋無音自動再生） -->
+      <div class="video-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard‑write; encrypted‑media; gyroscope; picture‑in-picture; web‑share" 
+          allowfullscreen>
         </iframe>
       </div>
     </div>
