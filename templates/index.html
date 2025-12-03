@@ -79,7 +79,7 @@
   <div class="wrapper">
     <h1>最新ランキング</h1>
 
-    <!-- 動画を先頭に表示（透明化＋クリック無効化） -->
+    <!-- 上の透明動画 -->
     <div class="video-wrapper">
       <iframe
         src="https://www.youtube.com/embed/xVNHG0ThbEw?autoplay=1&mute=1"
@@ -89,7 +89,7 @@
       </iframe>
     </div>
 
-    <!-- その下にカードリスト -->
+    <!-- カードリスト -->
     <ul class="cards">
       {% for item in items %}
       <li>
@@ -100,6 +100,18 @@
       </li>
       {% endfor %}
     </ul>
+
+    <!-- 下の透明動画（差し替え済み） -->
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/8B_ISY4nXeU?si=iL2MC93q5mUa-evw&autoplay=1&mute=1"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+
   </div>
 </body>
 </html>
