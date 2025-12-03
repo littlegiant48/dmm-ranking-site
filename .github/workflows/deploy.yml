@@ -15,13 +15,24 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/configure-pages@v5
+
+      - name: Set up config
+        run: |
+          echo "API_ID='${{ secrets.DMM_API_ID }}'" > config.py
+          echo "AFF_ID='${{ secrets.DMM_AFF_ID }}'" >> config.py
+          echo "SERVICE='digital'" >> config.py
+          echo "FLOOR='videoa'" >> config.py
+          echo "HITS='1'" >> config.py
+          echo "SORT='rank'" >> config.py
+
       - name: Build site
         run: python update.py
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./output
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
