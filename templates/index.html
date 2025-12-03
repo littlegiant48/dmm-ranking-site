@@ -1,94 +1,68 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF‑8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ item.title }}</title>
+  <title>DMMランキング</title>
   <style>
     body {
-      background-color: #f4f4f8;
-      color: #333;
-      font-family: sans-serif;
       margin: 0;
       padding: 0;
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      color: #333;
     }
     .wrapper {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
-    .content {
+    .layout {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
+    .cards {
+      flex: 1 1 600px; /* 左側：カードエリア */
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
     .card {
-      flex: 1 1 480px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 12px;
       overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .card img {
       width: 100%;
       height: auto;
       display: block;
     }
-    .card-body {
-      padding: 16px;
+    .card-title {
+      padding: 0.6rem 0.8rem 1rem;
+      font-size: 1rem;
+      line-height: 1.25;
     }
-    .card-body h1 {
-      margin-top: 0;
-      font-size: 1.5em;
-    }
-    .meta-list {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 16px 0;
-    }
-    .meta-list li {
-      margin: 4px 0;
-      font-size: 0.9em;
-      color: #555;
-    }
-    .detail-button {
-      display: inline-block;
-      padding: 10px 18px;
-      background-color: #007BFF;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1em;
-      transition: background-color 0.2s;
-    }
-    .detail-button:hover {
-      background-color: #0056b3;
-    }
-    .back-button {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 8px 16px;
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background-color 0.2s;
-    }
-    .back-button:hover {
-      background-color: #5a6268;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
 
-    /* 動画用コンテナ */
     .video-wrapper {
-      flex: 1 1 480px;
-      /* 埋め込みiframeのアスペクト比を維持 */
+      flex: 0 1 400px; /* 右側：動画エリア */
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%; /* 16:9 アスペクト比維持 */
       height: 0;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       background-color: #000;
     }
@@ -99,72 +73,44 @@
       height: 100%;
       border: none;
     }
-    @media (max-width: 768px) {
-      .content {
+
+    @media (max-width: 900px) {
+      .layout {
         flex-direction: column;
+      }
+      .video-wrapper {
+        margin-top: 20px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
-    <div class="content">
-      <!-- 左側：カード情報 -->
-      <div class="card">
-        <img src="{{ item.imageURL.large }}" alt="サムネイル">
-        <div class="card-body">
-          <h1>{{ item.title }}</h1>
-          <ul class="meta-list">
-            {% if item.iteminfo.actress %}
-              <li><strong>出演者：</strong>
-                {% for a in item.iteminfo.actress %}
-                  {{ a.name }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </li>
-            {% endif %}
-            {% if item.iteminfo.genre %}
-              <li><strong>ジャンル：</strong>
-                {% for g in item.iteminfo.genre %}
-                  {{ g.name }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </li>
-            {% endif %}
-            {% if item.iteminfo.maker %}
-              <li><strong>メーカー：</strong>
-                {% for m in item.iteminfo.maker %}
-                  {{ m.name }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </li>
-            {% endif %}
-            {% if item.iteminfo.label %}
-              <li><strong>レーベル：</strong>
-                {% for l in item.iteminfo.label %}
-                  {{ l.name }}{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </li>
-            {% endif %}
-          </ul>
-
-          <a class="detail-button" href="{{ item.affiliateURL }}" target="_blank" rel="noopener">
-            DMMで詳細を見る
+    <h1>最新ランキング</h1>
+    <div class="layout">
+      <!-- 左側：カードリスト -->
+      <ul class="cards">
+        {% for item in items %}
+        <li>
+          <a class="card" href="items/{{ item.content_id }}.html">
+            <img src="{{ item.imageURL.large }}" alt="{{ item.title }}">
+            <div class="card-title">{{ item.title }}</div>
           </a>
-          <br>
-          <button class="back-button" onclick="history.back()">← 戻る</button>
-        </div>
-      </div>
+        </li>
+        {% endfor %}
+      </ul>
 
       <!-- 右側：YouTube動画埋め込み -->
       <div class="video-wrapper">
-  <iframe width="560" height="315"
-          src="https://www.youtube.com/embed/xVNHG0ThbEw"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-  </iframe>
-</div>
+        <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/xVNHG0ThbEw"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+        </iframe>
+      </div>
     </div>
   </div>
 </body>
 </html>
-
